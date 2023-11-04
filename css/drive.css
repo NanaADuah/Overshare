@@ -1,7 +1,112 @@
-﻿body {
+﻿html, body {
+    min-height: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
 }
 
+#wrapper {
+    flex-wrap: nowrap;
+    align-content: stretch;
+}
+
+#home{
+    width: auto;
+    margin: 0;
+}
+
+#storage{
+    
+}
 
 #options {
     background-color: #B8D8E0;
+    resize: horizontal;
+    overflow: auto;
+    height: 100%;
+    width: 300px;
+}
+
+#upload {
+    background-color: #B8D8E0;
+    height: 100%;
+    width: auto;
+    margin: 0px;
+    padding: 0px;
+}
+
+.options-list {
+    /*padding: 5px;*/
+    /*margin: 2px;*/
+    /*background-color: #6DB5CA;*/
+    font-size: large;
+}
+
+#options-list{
+    padding: 0px;
+}
+
+#options-wrapper {
+    margin: auto !important;
+    align-content: center;
+}
+
+#options-bottom-wrapper{
+    margin: auto !important;
+    align-content: center;
+}
+
+.options-icon {
+    padding-left: 5px !important;
+}
+
+#bottom-items{
+    vertical-align: bottom;
+    bottom: 0 !important;
+}
+
+#user-image{
+    width: 50px;
+    border-radius: 50%;
+}
+
+#search-input{
+    width: 80%;
+    font-size: large;
+    background-color: #B8D8E0 !important;
+    outline: none !important;
+}
+
+::placeholder{
+    color: black;
+}
+
+.user-item{
+    align-content: center;
+    text-align: center;
+    width: 10%;
+}
+
+#drive-items{
+    gap: 30px;
+}
+
+.share-user {
+    background-color: #6DB5CA;
+    padding: 7px;
+    margin: auto;
+}
+
+#overview{
+    vertical-align:middle;
+}
+
+.users-list{
+    padding: 0px !important;
+}
+
+.share-profile-img{
+    width: 40px !important;
+    border-radius: 50%;
 }

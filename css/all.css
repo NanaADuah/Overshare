@@ -1,0 +1,11 @@
+﻿@font-face {
+    font-family: 'DMA Sans';
+    src: url(../fonts/DMSans-VariableFont_opsz,wght.ttf);
+}
+* {
+    transition: 0.2s ease-in-out;
+}
+
+body {
+}
+
