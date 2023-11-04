@@ -20,6 +20,9 @@ Welcome to Overshare, your personal cloud storage app that allows you to securel
 
 Overshare is a cloud storage application that aims to provide a user-friendly and efficient platform for storing and managing files in the cloud. Whether you're a student, professional, or just someone who wants to keep their files safe and accessible, Overshare has got you covered. It offers a seamless experience for both individual users and teams, making it an ideal choice for personal and collaborative file management needs.
 
+![OverShare](https://github.com/NanaADuah/Overshare/assets/84854124/5e29bdc7-929e-4d81-9adf-1c30c0569cdc)
+
+
 ## Features
 
 - **Secure Cloud Storage**: All your files are encrypted and stored securely in the cloud, ensuring your data remains safe and private.
