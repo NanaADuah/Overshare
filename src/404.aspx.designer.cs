@@ -11,7 +11,7 @@ namespace Overshare.src
 {
 
 
-    public partial class _default
+    public partial class _404
     {
 
         /// <summary>
