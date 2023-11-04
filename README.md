@@ -4,8 +4,7 @@
 
 Welcome to Overshare, your personal cloud storage app that allows you to securely store and access your files from anywhere, anytime. With Overshare, you can effortlessly share files with others, ensuring seamless collaboration and convenience.
 
-![Uploading OverShare.png…]()
-
+![OverShare](https://github.com/NanaADuah/Overshare/assets/84854124/d905a2e2-764b-49b3-ad07-3984d7774dd4)
 
 ## Table of Contents
 
