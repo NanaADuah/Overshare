@@ -1,9 +1,8 @@
-﻿@font-face {
-    font-family: 'DMA Sans';
-    src: url(../fonts/DMSans-VariableFont_opsz,wght.ttf);
-}
+﻿@import url('https://fonts.cdnfonts.com/css/dm-sans?styles=50588,50585,50586,50587,50583,50584');
+
 * {
     transition: 0.2s ease-in-out;
+    font-family: 'DM Sans', sans-serif;
 }
 
 body {

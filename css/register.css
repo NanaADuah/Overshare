@@ -6,15 +6,16 @@
     overflow: hidden;
 }
 
-.right {
-    background-color: #B8D8E0;
-    text-align: center;
-    height: 100vh;
-}
-
-::placeholder{
+::placeholder {
     color: black;
     font-size: large;
+}
+
+.overview {
+    background-color: #B8D8E0;
+    height: 100vh;
+    width: 100% !important;
+    margin: 0;
 }
 
 #inputView {
@@ -33,16 +34,6 @@
     display: flex !important;
 }
 
-.dots {
-    height: 10px !important;
-    width: 10px !important;
-    
-    border-radius: 50%;
-    background-color: white;
-    padding: 0px !important;
-    border: 2px solid black;
-}
-
-#btnLogIn{
-    outline: none;  
+#btnRegister {
+    outline: none;
 }
