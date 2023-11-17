@@ -3,6 +3,9 @@
 * {
     transition: 0.2s ease-in-out;
     font-family: 'DM Sans', sans-serif;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 body {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Web;
 using System.Web.Configuration;
 
@@ -33,6 +35,11 @@ namespace Overshare.Data
 
         }
 
+        public string GetFullName()
+        {
+            return $"{FirstName} {LastName}";
+        }
+
         public static Guid GenerateUniqueUserId()
         {
             byte[] guidBytes = new byte[16];
@@ -49,6 +56,30 @@ namespace Overshare.Data
             guidBytes[8] = (byte)((guidBytes[8] & 0x3F) | 0x80); // Variant 2
 
             return new Guid(guidBytes);
+        }
+
+        public string GetUserPath()
+        {
+            return Path.Combine(HttpContext.Current.Server.MapPath("~/Users/"), UserID.ToString());
+        }
+
+        public List<User> GetShareList()
+        {
+            var shareListPath = Path.Combine(GetUserPath() + "/shareList.json");
+
+            List<User> uploadedFiles;
+
+            if (File.Exists(shareListPath))
+            {
+                var json = File.ReadAllText(shareListPath);
+                uploadedFiles = JsonSerializer.Deserialize<List<User>>(json);
+            }
+            else
+            {
+                uploadedFiles = new List<User>();
+            }
+
+            return uploadedFiles;
         }
     }
 }

@@ -61,10 +61,32 @@ namespace Overshare.Data
             return BCrypt.Net.BCrypt.Verify(password, storedHashedPassword);
         }
 
+        public static bool UserExists(string email)
+        {
+            string connectionString = WebConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Check if a user with the provided email already exists in the Users table
+                string query = "SELECT COUNT(*) FROM UserInformation WHERE Email = @Email";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Email", email);
+
+                    int userCount = (int)command.ExecuteScalar();
+
+                    // If userCount is greater than 0, a user with the email already exists
+                    return userCount > 0;
+                }
+            }
+        }
+
         public static bool RegisterUser(string email, string password, string firstName, string lastName)
         {
             // Hash the user's password
-            string hashedPassword = Hasher.HashPassword(password);
+            string hashedPassword = password;   //password already hashed
 
             // Generate a new unique user ID
             Guid newUserID = User.GenerateUniqueUserId();
@@ -79,7 +101,7 @@ namespace Overshare.Data
                 try
                 {
                     // Step 1: Insert user data into the Users table
-                    using (SqlCommand userInsertCommand = new SqlCommand("INSERT INTO Users (UserID, Password) VALUES (@UserID, @Username, @Password)", connection, transaction))
+                    using (SqlCommand userInsertCommand = new SqlCommand("INSERT INTO Users (UserID, Password) VALUES (@UserID, @Password)", connection, transaction))
                     {
                         userInsertCommand.Parameters.AddWithValue("@UserID", newUserID);
                         userInsertCommand.Parameters.AddWithValue("@Password", hashedPassword);
@@ -110,6 +132,8 @@ namespace Overshare.Data
                         infoInsertCommand.ExecuteNonQuery();
                     }
 
+                    UserAccount.EnsureUserFolderAndFilesExist(newUserID);
+
                     // Commit the transaction
                     transaction.Commit();
                     return true;
@@ -122,5 +146,7 @@ namespace Overshare.Data
                 }
             }
         }
+
+
     }
 }

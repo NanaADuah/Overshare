@@ -14,7 +14,7 @@
 <body>
     <form id="form1" runat="server" style="height: 100%">
         <div class="d-flex w-100 h-100 flex-fill align-items-center justify-content-center" id="wrapper" style="flex-basis: 0 !important">
-            <%--<asp:Label runat="server" Text="" id="errorMessage"></asp:Label>--%>
+            
             <div class="left justify-content-center align-items-center text-center mt-4" style="min-width: 0; width: 50%">
                 <div class="w-auto mx-auto">
                     <img class="w-25 mx-auto" src="src/Logo.svg" style="width: fit-content" /><br />
@@ -36,6 +36,7 @@
             <div class="right flex-grow-1 align-content-center justify-content-center" style="width: 50%">
                 <div class="align-content-center justify-content-center h-100 d-flex">
                     <div id="inputView" class="w-50 text-center justify-content-center mx-auto">
+                        <asp:Label runat="server" Text="" id="lblError"></asp:Label>
                         <div class="fs-4" style="text-align: left">
                             <span class="fw-bold">Welcome Back!</span><br />
                             <span class="fw-normal">Login to your account below:</span>
@@ -48,8 +49,15 @@
                             <img src="src/Lock.svg" style="margin-right: 10px" />
                             <input runat="server" class="border-0 input w-75" placeholder="Password" title="Password" type="password" id="passwordInput" />
                         </div>
-                        <div class="px-4 py-3 mb-3 rounded-5 bg-black w-50 mx-auto text-center">
-                            <asp:Button runat="server" ID="btnLogIn" class="btn text-white mx-auto p-0" Text="Log In" OnClick="btnLogIn_Click" />
+                        <div class="px-4 py-3 mb-3 rounded-5 bg-black w-50 mx-auto fw-normal text-center text-white" style="cursor: pointer" onclick="document.getElementById('btnLogIn').click()">
+                            <asp:Button runat="server" ID="btnLogIn" class="d-none" Text="Log In" OnClick="btnLogIn_Click" />
+                            Login
+                        </div>
+                        <div>
+                            <input runat="server" class="form-check-input" type="checkbox" value="" id="chkLoggedIn"/>
+                              <label class="form-check-label" for="chkLoggedIn">
+                                Remember Me
+                              </label>
                         </div>
                         <div class="p-2">
                             <div class="fw-normal fs-5">

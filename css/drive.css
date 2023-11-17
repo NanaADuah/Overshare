@@ -11,13 +11,17 @@
     align-content: stretch;
 }
 
-#home{
+#middle{
     width: auto;
     margin: 0;
 }
 
 #storage{
     
+}
+
+#itemName:hover{
+    text-decoration: underline;
 }
 
 #options {
@@ -38,9 +42,14 @@
 
 .options-list {
     /*padding: 5px;*/
-    /*margin: 2px;*/
+    margin: 2px;
     /*background-color: #6DB5CA;*/
     font-size: large;
+    cursor: pointer;
+}
+
+.options-list:hover {
+    background-color: #a8cdd7;
 }
 
 #options-list{
@@ -85,11 +94,16 @@
 .user-item{
     align-content: center;
     text-align: center;
-    width: 10%;
+    background-color: #B8D8E0;
+    width: 8%;
+}
+
+.user-item:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 #drive-items{
-    gap: 30px;
+    gap: 50px;
 }
 
 .share-user {
@@ -109,4 +123,9 @@
 .share-profile-img{
     width: 40px !important;
     border-radius: 50%;
+}
+
+#shareUser:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }

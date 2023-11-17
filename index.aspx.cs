@@ -19,7 +19,7 @@ namespace Overshare
             else
             {
                 // No user is logged in. Redirect to the login page.
-                Response.Redirect("Login.aspx");
+                Response.Redirect("~/Login.aspx");
             }
         }
     }

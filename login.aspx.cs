@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -15,7 +16,6 @@ namespace Overshare
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void btnLogIn_Click(object sender, EventArgs e)
@@ -31,14 +31,14 @@ namespace Overshare
                 Session["User"] = user;
 
                 // Redirect to the dashboard upon successful login
-                Response.Redirect(".../drive/drive.aspx");
-                //FormsAuthentication.SetAuthCookie(email, rememberMe);
+                FormsAuthentication.SetAuthCookie(email, chkLoggedIn.Checked);
+                UserAccount.EnsureUserFolderAndFilesExist(user.UserID);
+                Response.Redirect("/drive/drive.aspx");
 
             }
             else
             {
-                // Display an error message or perform other actions for failed login
-                //errorMessage.Text = "Login failed. Please check your credentials.";
+                lblError.Text = "Login failed. Please check your credentials.";
             }
         }
     }

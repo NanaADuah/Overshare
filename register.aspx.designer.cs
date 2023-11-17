@@ -33,6 +33,15 @@ namespace Overshare
         protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
+        /// detailsPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl detailsPage;
+
+        /// <summary>
         /// firstNameInput control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace Overshare
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputPassword passwordConfirmInput;
+
+        /// <summary>
+        /// pricePlanPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pricePlanPage;
 
         /// <summary>
         /// btnRegister control.

@@ -18,8 +18,7 @@ namespace Overshare.Data
             {
                 connection.Open();
 
-                // Updated SQL query to fetch user data by email
-                string selectQuery = "SELECT UserID, Email, PasswordHash FROM Users WHERE Email = @Email";
+                string selectQuery = "SELECT i.UserID, Email, FirstName, LastName, RegistrationDate FROM Users e INNER JOIN UserInformation i ON e.UserID = i.UserID WHERE Email = @Email";
                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
                     command.Parameters.AddWithValue("@Email", email);
@@ -44,7 +43,6 @@ namespace Overshare.Data
                                 LastName = lastName,
                                 RegistrationDate = registrationDate,
 
-                                // Set other user properties as needed
                             };
                         }
                     }

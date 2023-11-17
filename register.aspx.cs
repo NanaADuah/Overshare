@@ -12,13 +12,14 @@ namespace Overshare
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
             string email = emailInput.Value.Trim();
             string password = passwordInput.Value;
+            string confirmPassword = passwordConfirmInput.Value;
             string firstName = firstNameInput.Value.Trim();
             string lastName = lastNameInput.Value.Trim();
 
@@ -28,20 +29,34 @@ namespace Overshare
                 lblError.Text = "Please fill in all required fields.";
                 return;
             }
-            else
-            {
+            
+            if(password != confirmPassword){
                 // Registration failed, handle the error (e.g., show an error message).
-                lblError.Text = "Registration failed. Please try again.";
+                lblError.Text = "Passwords do not match. Please try again.";
+                lblError.ForeColor = System.Drawing.Color.Red;
+                return;
             }
 
             // Clean and hash the password (You can use the HashPassword method from the previous code)
             string hashedPassword = Hasher.HashPassword(password);
 
+            if (UserMethods.UserExists(email))
+            {
+                lblError.Text = "This email is already in use.";
+                lblError.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
             // Call the RegisterUser method to create the user
             if (UserMethods.RegisterUser(email, hashedPassword, firstName, lastName))
             {
                 // Registration successful, you can redirect to the home page or show a success message.
-                Response.Redirect("Home.aspx");
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                lblError.Text = "Registration failed";
+                lblError.ForeColor = System.Drawing.Color.Red;
             }
         }
     }
