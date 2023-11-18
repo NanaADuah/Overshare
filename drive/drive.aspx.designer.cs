@@ -141,6 +141,15 @@ namespace Overshare.drive
         protected global::System.Web.UI.WebControls.Button btnViewOthers;
 
         /// <summary>
+        /// viewFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl viewFile;
+
+        /// <summary>
         /// shared control.
         /// </summary>
         /// <remarks>
@@ -177,6 +186,42 @@ namespace Overshare.drive
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl settings;
 
         /// <summary>
+        /// changeUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText changeUser;
+
+        /// <summary>
+        /// changePassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword changePassword;
+
+        /// <summary>
+        /// changePasswordConfirm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword changePasswordConfirm;
+
+        /// <summary>
+        /// upload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl upload;
+
+        /// <summary>
         /// FileUploads control.
         /// </summary>
         /// <remarks>
@@ -193,5 +238,14 @@ namespace Overshare.drive
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUpload;
+
+        /// <summary>
+        /// settingsSideBar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl settingsSideBar;
     }
 }

@@ -32,7 +32,7 @@
     width: 300px;
 }
 
-#upload {
+#rightView {
     background-color: #B8D8E0;
     height: 100%;
     width: auto;
@@ -41,14 +41,14 @@
 }
 
 .options-list {
-    /*padding: 5px;*/
+    padding-left: 5px;
+    padding-right: 5px;
     margin: 2px;
-    /*background-color: #6DB5CA;*/
     font-size: large;
     cursor: pointer;
 }
 
-.options-list:hover {
+.options-list:hover{
     background-color: #a8cdd7;
 }
 
@@ -75,7 +75,7 @@
     bottom: 0 !important;
 }
 
-#user-image{
+.user-image{
     width: 50px;
     border-radius: 50%;
 }
@@ -128,4 +128,15 @@
 #shareUser:hover{
     text-decoration: underline;
     cursor: pointer;
+}
+
+.changeInput {
+    background-color: #B8D8E0;
+    padding: 5px 15px 5px 15px;
+    width: 70%;
+    border: none !important;
+}
+
+.changeInput:active{
+    border: none !important;
 }

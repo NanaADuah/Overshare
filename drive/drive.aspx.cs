@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -25,6 +26,7 @@ namespace Overshare.drive
         protected List<User> ShareList;
         protected string CurrentSelectedPage = "Home";
         protected string DisplayFilter ;
+        protected Guid CurrentFile;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,6 +42,7 @@ namespace Overshare.drive
                 RemoveDuplicateFiles(files);
                 fileCount = files.Count;
                 ShareList = user.GetShareList();
+                changeUser.Value = user.GetFullName();
             }
             else
             {
@@ -47,47 +50,78 @@ namespace Overshare.drive
             }
         }
 
+        public void ChangeName()
+        {
+            string newName = changeUser.Value.Trim();
+            string fullName = Regex.Replace(newName, @"[^a-zA-Z\s]+", "");
+
+            if (!Regex.IsMatch(fullName, @"^[a-zA-Z\s]+$"))
+            {
+                throw new ArgumentException("Invalid characters in the full name.");
+            }
+
+        }
+
         public void DisplayPage(string CurrentSelectedPage)
         {
             if(CurrentSelectedPage == "Settings")
             {
-                home.Style["Display"] = "none";
-                shared.Style["Display"] = "none";
                 favourites.Style["Display"] = "none";
-                trash.Style["Display"] = "none";
                 settings.Style["Display"] = "block";
+                viewFile.Style["Display"] = "none";
+                shared.Style["Display"] = "none";
+                trash.Style["Display"] = "none";
+                home.Style["Display"] = "none";
+
+                settingsSideBar.Style["Display"] = "block";
+                upload.Style["Display"] = "none";
             }
             else
             if(CurrentSelectedPage == "Shared"){
-                home.Style["Display"] = "none";
-                shared.Style["Display"] = "block";
                 favourites.Style["Display"] = "none";
-                trash.Style["Display"] = "none";
                 settings.Style["Display"] = "none";
-            }else
+                viewFile.Style["Display"] = "none";
+                shared.Style["Display"] = "block";
+                trash.Style["Display"] = "none";
+                home.Style["Display"] = "none";
+            }
+            else
             if (CurrentSelectedPage == "Trash")
             {
-                home.Style["Display"] = "none";
-                shared.Style["Display"] = "none";
                 favourites.Style["Display"] = "none";
-                trash.Style["Display"] = "block";
                 settings.Style["Display"] = "none";
+                viewFile.Style["Display"] = "none";
+                shared.Style["Display"] = "none";
+                trash.Style["Display"] = "block";
+                home.Style["Display"] = "none";
             }
             else
             if (CurrentSelectedPage == "Favourites")
             {
-                home.Style["Display"] = "none";
-                shared.Style["Display"] = "none";
                 favourites.Style["Display"] = "block";
-                trash.Style["Display"] = "none";
                 settings.Style["Display"] = "none";
-            }
-            else{
-                home.Style["Display"] = "block";
+                viewFile.Style["Display"] = "none";
                 shared.Style["Display"] = "none";
-                favourites.Style["Display"] = "none";
                 trash.Style["Display"] = "none";
+                home.Style["Display"] = "none";
+            }
+            else
+            if(CurrentSelectedPage == "Files"){
+                favourites.Style["Display"] = "none";
                 settings.Style["Display"] = "none";
+                viewFile.Style["Display"] = "block";
+                shared.Style["Display"] = "none";
+                trash.Style["Display"] = "none";
+                home.Style["Display"] = "none";
+            }
+            else
+            {
+                favourites.Style["Display"] = "none";
+                settings.Style["Display"] = "none";
+                viewFile.Style["Display"] = "none";
+                shared.Style["Display"] = "none";
+                trash.Style["Display"] = "none";
+                home.Style["Display"] = "block";
             }
         }
         private void ValidateUploadedFiles()
@@ -115,7 +149,6 @@ namespace Overshare.drive
             }
             else
             {
-                // If the JSON file doesn't exist, there's nothing to validate
                 return;
             }
 
@@ -335,6 +368,20 @@ namespace Overshare.drive
             }
         }
 
+        public void ViewFile(Guid FileID)
+        {
+            CurrentFile = FileID;
+            favourites.Style["Display"] = "none";
+            settings.Style["Display"] = "none";
+            viewFile.Style["Display"] = "block";
+            shared.Style["Display"] = "none";
+            trash.Style["Display"] = "none";
+            home.Style["Display"] = "none";
+            
+            FileDetails fileInfo = FileDetails.GetUsersFileDetails(FileID, user);
+            Response.Redirect(Page.Request.Url.ToString(), true);
+        }
+
         public static string SanitizePath(string path)
         {
             var lastBackslash = path.LastIndexOf('\\');
@@ -462,12 +509,9 @@ namespace Overshare.drive
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            LogoutUser();
+            LogoutUser.Logout(user);
         }
 
-        private void LogoutUser()
-        {
-        }
 
         protected void btnViewDocuments_Click(object sender, EventArgs e)
         {
@@ -507,6 +551,29 @@ namespace Overshare.drive
                 DisplayFilter = "All";
             else
                 DisplayFilter = "Others";
+        }
+
+        public static string TruncateFileNameWithoutExtension(string fileName, int maxLength, string truncationIndicator = "...")
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return fileName;
+            }
+
+            int extensionIndex = fileName.LastIndexOf('.');
+            string extension = extensionIndex != -1 ? fileName.Substring(extensionIndex) : string.Empty;
+
+            string fileNameWithoutExtension = extensionIndex != -1
+                ? fileName.Substring(0, extensionIndex)
+                : fileName;
+
+            if (fileNameWithoutExtension.Length > maxLength)
+            {
+                fileNameWithoutExtension = fileNameWithoutExtension.Substring(0, maxLength - truncationIndicator.Length);
+                fileNameWithoutExtension += truncationIndicator;
+            }
+
+            return fileNameWithoutExtension;
         }
     }
 }

@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="../css/drive.css" />
     <link rel="stylesheet" href="../css/all.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <title>My Drive | OverShare </title>
     <style>
-        /* Styles for the percentage bar container */
-
         .video-bar-fill {
             height: 10px; /* Adjust the height as needed */
             background-color: #3498db; /* Blue color for the video portion */
@@ -125,40 +127,40 @@
         <%if (user != null)
             { %>
         <div class="row h-100 d-flex flex-shirnk-0" id="wrapper">
-            <div id="options" class="column p-1">
+            <div id="options" class="column p-1 position-relative  overflow-hidden">
                 <div id="logo" class="mb-3 w-75 mx-auto my-2">
                     <img src="../src/Logo.svg" class="img-fluid p-2" />
                 </div>
                 <div class="d-none">
-                    <asp:Button ID="btnViewHome" OnClick="btnViewHome_Click"  runat="server"/>
-                    <asp:Button ID="btnViewShared" OnClick="btnViewShared_Click"  runat="server"/>
-                    <asp:Button ID="btnViewFavourites" OnClick="btnViewFavourites_Click"   runat="server"/>
-                    <asp:Button ID="btnViewTrash" OnClick="btnViewTrash_Click"  runat="server"/>
-                    <asp:Button ID="btnViewSettings" OnClick="btnViewSettings_Click"  runat="server"/>
-                    <asp:Button ID="btnLogout" OnClick="btnLogout_Click"  runat="server"/>
+                    <asp:Button ID="btnViewHome" OnClick="btnViewHome_Click" runat="server" />
+                    <asp:Button ID="btnViewShared" OnClick="btnViewShared_Click" runat="server" />
+                    <asp:Button ID="btnViewFavourites" OnClick="btnViewFavourites_Click" runat="server" />
+                    <asp:Button ID="btnViewTrash" OnClick="btnViewTrash_Click" runat="server" />
+                    <asp:Button ID="btnViewSettings" OnClick="btnViewSettings_Click" runat="server" />
+                    <asp:Button ID="btnLogout" OnClick="btnLogout_Click" runat="server" />
                 </div>
                 <div id="options-wrapper" class="w-75 align-content-center">
                     <ul class="list-group-horizontal mx-auto" id="options-list">
-                        <li class="list-group-item options-list rounded-5" onclick="btnViewHome.click()" style="<%=(CurrentSelectedPage == "Home") ? "background-color: #6DB5CA": "background-color: inherit"%>">
+                        <li class="list-group-item options-list rounded-5" onclick="btnViewHome.click()" style="background-color: <%=(CurrentSelectedPage == "Home") ? "#6DB5CA": ""%>">
                             <img class="img-fluid options-icon mx-2 py-2 my-1" src="../src/home.svg" />
                             Home</li>
-                        <li class="list-group-item options-list rounded-5" onclick="btnViewShared.click()" style="<%=(CurrentSelectedPage == "Shared") ? "background-color: #6DB5CA": "background-color: inherit"%>">
+                        <li class="list-group-item options-list rounded-5" onclick="btnViewShared.click()" style="background-color: <%=(CurrentSelectedPage == "Shared") ? "#6DB5CA": ""%>">
                             <img class="img-fluid options-icon mx-2 py-2 my-1" src="../src/users.svg" />
                             Shared</li>
-                        <li class="list-group-item options-list rounded-5" onclick="btnViewFavourites.click()" style="<%=(CurrentSelectedPage == "Favourites") ? "background-color: #6DB5CA": "background-color: inherit"%>">
+                        <li class="list-group-item options-list rounded-5" onclick="btnViewFavourites.click()" style="background-color: <%=(CurrentSelectedPage == "Favourites") ? "#6DB5CA": ""%>">
                             <img class="img-fluid options-icon mx-2 py-2 my-1" src="../src/favourites.svg" />
                             Favourites</li>
-                        <li class="list-group-item options-list rounded-5" onclick="btnViewTrash.click()" style="<%=(CurrentSelectedPage == "Trash") ? "background-color: #6DB5CA": "background-color: inherit"%>">
+                        <li class="list-group-item options-list rounded-5" onclick="btnViewTrash.click()" style="background-color: <%=(CurrentSelectedPage == "Trash") ? "#6DB5CA": ""%>">
                             <img class="img-fluid options-icon mx-2 py-2 my-1" src="../src/trash-2.svg" />
                             Trash</li>
                     </ul>
                 </div>
-                <div id="options-bottom-wrapper" class="bottom-0 position-absolute mx-auto">
-                    <ul class="list-group-horizontal align-bottom" id="bottom-items">
-                        <li class="list-group-item options-list rounded-5" onclick="btnViewSettings.click()" style="<%=(CurrentSelectedPage == "Settings") ? "background-color: #6DB5CA": "inherit"%>">
+                <div id="options-bottom-wrapper" class="bottom-0 position-absolute mx-auto w-100 align-content-center">
+                    <ul class="list-group-horizontal align-bottom p-0 w-75 mx-auto" id="bottom-items">
+                        <li class="list-group-item options-list rounded-5" onclick="btnViewSettings.click()" style="margin-left: 0; margin-right: 0; <%=(CurrentSelectedPage == "Settings") ? "background-color: #6DB5CA": "inherit"%>">
                             <img class="rounded img-fluid options-icon mx-2 py-2 my-1" src="../src/settings.svg" />
                             Settings</li>
-                        <li class="list-group-item options-list rounded-5" onclick="btnLogout_Click.click()">
+                        <li class="list-group-item options-list rounded-5" onclick="btnLogout.click()" style="margin-left: 0; margin-right: 0;">
                             <img class="img-fluid options-icon mx-2 py-2 my-1" src="../src/log-out.svg" />
                             Logout</li>
                     </ul>
@@ -169,7 +171,7 @@
                     <div id="overview" class="column flex-row d-flex align-items-center justify-content-center" style="gap: 15px;">
                         <div class="row d-flex flex-row m-0 px-1" style="flex-wrap: nowrap; gap: 15px;">
                             <div class="column p-0" style="width: fit-content">
-                                <img class="" id="user-image" src="<%=$"{user.GetUserPath()}\\profile.svg"%>" />
+                                <img class="user-image" src="../Users/<%=user.UserID%>/profile.svg" alt="Profile Image" />
                             </div>
                             <div class="column p-0 px-5 fw-bold" style="padding-left: 0px !important;">
                                 <span class="text-body"><%=TimeGreeting%>,</span><br />
@@ -189,7 +191,7 @@
                                 New
                             </div>
                         </div>
-                        <div class="text-center p-2" style="background-color: #6DB5CA">Upgrade plan</div>
+                        <div class="text-center p-2 rounded-2 px-4 h-100" style="background-color: #6DB5CA">Upgrade plan</div>
 
                     </div>
                     <div id="storage" class="py-4">
@@ -207,11 +209,11 @@
                     </div>
                     <div id="drive-items" class="row d-flex flex-container p-2 m-2 ">
                         <div class="d-none">
-                            <asp:Button id="btnViewDocuments" runat="server" OnClick="btnViewDocuments_Click"/>
-                            <asp:Button id="btnViewImages" runat="server" OnClick="btnViewImages_Click"/>
-                            <asp:Button id="btnViewVideos" runat="server" OnClick="btnViewVideos_Click"/>
-                            <asp:Button id="btnViewAudio" runat="server" OnClick="btnViewAudio_Click"/>
-                            <asp:Button id="btnViewOthers" runat="server" OnClick="btnViewOthers_Click"/>
+                            <asp:Button ID="btnViewDocuments" runat="server" OnClick="btnViewDocuments_Click" />
+                            <asp:Button ID="btnViewImages" runat="server" OnClick="btnViewImages_Click" />
+                            <asp:Button ID="btnViewVideos" runat="server" OnClick="btnViewVideos_Click" />
+                            <asp:Button ID="btnViewAudio" runat="server" OnClick="btnViewAudio_Click" />
+                            <asp:Button ID="btnViewOthers" runat="server" OnClick="btnViewOthers_Click" />
                         </div>
                         <div class="user-item column rounded-5 align-content-center p-2 py-4 flex-fill" onclick="btnViewDocuments.click()" style="<%=(DisplayFilter == "Documents") ? "background-color: #8db4be": "background-color: #B8D8E0"%>">
                             <img src="../src/file.svg" /><br />
@@ -245,7 +247,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th><%=(DisplayFilter == "All")?"You have no files":"No files match selected criteria" %></th>
+                                    <td><%=(DisplayFilter == "All")?"You have no files":"No files match selected criteria" %></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -265,9 +267,9 @@
                                 <%foreach (var item in files)
                                     { %>
                                 <tr style="vertical-align: middle;">
-                                    <td>
+                                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <img style="height: 30px; padding-right: 10px" src='<%=$"../src/{GetFileType(item.FileExtension)}.svg"%>' />
-                                        <a id="itemName" class="text-decoration-none text-black" href="/drive/file.aspx?id=<%=item.FileID%>"><%=item.FileName%></a> </td>
+                                        <a id="itemName" class="text-decoration-none text-black "><%=TruncateFileNameWithoutExtension(item.FileName,50,"...")%></a> </td>
                                     <td><%=item.UploadDate.ToString("MMM dd, yyyy") %></td>
                                     <td id="shareUser"><%=String.Format("{0} {1}",item.Owner.FirstName, item.Owner.LastName)%></td>
                                     <td class="text-end"><%=Overshare.Data.UserActions.FormatFileSize(item.FileSize) %></td>
@@ -276,60 +278,203 @@
                             </tbody>
                         </table>
                         <%}
-%>
+                        %>
                     </div>
                 </div>
-                <div id="shared" runat="server" style="display:none">Shared</div>
-                <div id="favourites" runat="server" style="display:none"> Favourites</div>
-                <div id="trash" runat="server" style="display:none">Trash</div>
-                <div id="settings" runat="server" style="display:none">Settings</div>
+                <div id="viewFile" runat="server" style="display: none">File</div>
+                <div id="shared" runat="server" style="display: none">Shared</div>
+                <div id="favourites" runat="server" style="display: none">Favourites</div>
+                <div id="trash" runat="server" style="display: none">Trash</div>
+                <div id="settings" runat="server" style="display: none">
+                    <div class="row d-flex flex-row m-0 px-1" style="flex-wrap: nowrap; gap: 15px;">
+                        <div class="column p-0" style="width: fit-content">
+                            <%string url = user.GetUserProfileUrl();%>
+                            <img class="user-image" src="../Users/<%=user.UserID%>/profile.svg" />
+                        </div>
+                        <div class="column p-0 px-5 fw-bold" style="padding-left: 0px !important;">
+                            <span class="text-body-secondary"><%=user.GetFullName()%></span><br />
+                            <span class="text-body"><%=user.Email%></span><br />
+                        </div>
+                    </div>
+                    Personal Details
+                    <div style="user-select: none">
+                        Change Picture
+                        <div class="position-relative " style="width:150px">
+                            <img style="width:150px; filter: blur(3px) !important; z-index:2" class="p-2 rounded-circle" src="../Users/<%=user.UserID%>/profile.svg" alt="userImage" />
+                            <img id="plusIcon" src="../src/plusImage.svg" alt="plus" style="width: 40px;position: absolute;left:50%; top: 50%; transform: translate(-50%, -50%); z-index: 3;"/>
+                        </div>
+
+                        <div>
+                            <div class="">
+                                <table class="w-75" style="border-collapse: separate; border-spacing: 0 5px;">
+                                    <thead>
+                                        <tr></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="">
+                                            <td>Change Username</td>
+                                            <td>
+                                                <input class="changeInput rounded-5 border-0 p-2 px-4" id="changeUser" runat="server" value="" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Change Password</td>
+                                            <td>
+                                                <input class="changeInput rounded-5 border-0 p-2 px-4" id="changePassword" runat="server" type="password" value="password" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Change Confirm</td>
+                                            <td>
+                                                <input class="changeInput rounded-5  border-0 p-2 px-4" id="changePasswordConfirm" runat="server" type="password" value="password" /></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="w-100">
+                            <div class="w-50">
+                                <div class="rounded-5 text-black w-25 p-2 text-center my-5" style="background: #6DB5CA">Updates</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div>Account</div>
+                            <table class="w-50">
+                                <tbody>
+                                    <tr>
+                                        <td>Notification Preference</td>
+                                        <td class="text-decoration-underline">Edit</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div id="upload" class="row d-flex p-2">
-                <div class="column p-0 w-75 mx-auto" id="dropArea">
-                    <p class="fw-bold py-3 ">
-                        Upload
-                    </p>
-                    <div class="bg-white text-center rounded-4 py-4">
-                        <img src="../src/upload-cloud.svg" /><br />
-                        Drag Files
-                    </div>
-                    <div class="p-4 text-center">
-                        <p class="text-center text-decoration-underline" onclick="FileUploads.click()" style="cursor: pointer">Choose from device</p>
-                        <asp:FileUpload ID="FileUploads" runat="server" class="d-none" />
-                        <asp:Button class="btn rounded-5" runat="server" ID="btnUpload" Style="background-color: #6DB5CA !important; cursor: pointer" OnClick="btnUpload_Click" Text="Upload" />
-                    </div>
-                </div>
-                <div class="column" style="padding: 0px">
-                    <div class="align-content-center ">
-                        <div class="fw-normal px-5 fs-5">
-                            <p class="text-center">Share With</p>
+            <div id="rightView" class="row d-flex p-2">
+                <div id="upload" runat="server">
+                    <div class="column p-0 w-75 mx-auto" id="dropArea">
+                        <p class="fw-bold py-3 ">
+                            Upload
+                        </p>
+                        <div class="bg-white text-center rounded-4 py-4">
+                            <img src="../src/upload-cloud.svg" /><br />
+                            Drag Files
                         </div>
-                        <%if (ShareList.Count == 0 || ShareList == null)
-                            {%>
-                        <div class="text-center p-5">
-                            No users to share with.
+                        <div class="p-4 text-center">
+                            <p class="text-center text-decoration-underline" onclick="FileUploads.click()" style="cursor: pointer">Choose from device</p>
+                            <asp:FileUpload ID="FileUploads" runat="server" class="d-none" />
+                            <asp:Button class="btn rounded-5" runat="server" ID="btnUpload" Style="background-color: #6DB5CA !important; cursor: pointer" OnClick="btnUpload_Click" Text="Upload" />
                         </div>
-                        <%}
-                            else
-                            {%>
-                        <ul class="list-group-horizontal users-list justify-content-center align-items-center">
-                            <% foreach (var item in ShareList)
-                                { %>
+                    </div>
+                    <div class="column" style="padding: 0px">
+                        <div class="align-content-center ">
+                            <div class="fw-normal px-5 fs-5">
+                                <p class="text-center">Share With</p>
+                            </div>
+                            <%if (ShareList.Count == 0 || ShareList == null)
+                                {%>
+                            <div class="text-center p-5">
+                                No users to share with.
+                            </div>
+                            <%}
+                                else
+                                {%>
+                            <ul class="list-group-horizontal users-list justify-content-center align-items-center">
+                                <% foreach (var item in ShareList)
+                                    { %>
 
-                            <li class="list-group-item share-user rounded-5 my-2 px-2 w-75">
-                                <img class="share-profile-img" src="../src/user.svg" />
-                                <%=item.GetFullName()%></li>
-                            <%}%>
+                                <li class="list-group-item share-user rounded-5 my-2 px-2 w-75">
+                                    <img class="share-profile-img" src="../src/user.svg" />
+                                    <%=item.GetFullName()%></li>
+                                <%}%>
                             </ul>
                             <%} %>
+                        </div>
+                        <%if (ShareList.Count != 0 && ShareList != null)
+                            {%>
+                        <div>
+                            <p class="text-center" href="#">View All</p>
+                        </div>
+                        <%} %>
                     </div>
-                    <%if (ShareList.Count != 0 && ShareList != null)
-                        {%>
-                    <div>
-                        <p class="text-center" href="#">View All</p>
+                </div>
+                <div id="settingsSideBar" runat="server" style="display: none" class="h-100">
+                    <div class="justify-content-center align-items-center p-4 m-auto" style="line-height: 2em">
+                        <span class="fw-bold">Notification Preferences</span>
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkEmailNotifications" />
+                                <label class="form-check-label" for="checkEmailNotifications">
+                                    Email Notifications
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkMobileNotifications" />
+                                <label class="form-check-label" for="checkMobileNotifications">
+                                    Mobile Push Notifications
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkFileActivityNotfications" disabled />
+                                <label class="form-check-label" for="checkFileActivityNotfications">
+                                    File Activity
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkSharedFolderActivity" disabled />
+                                <label class="form-check-label" for="checkSharedFolderActivity">
+                                    Shared Folder Activity
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkNewFileUploads" disabled />
+                                <label class="form-check-label" for="checkNewFileUploads">
+                                    New File Uploads
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkCollaborationRequests" disabled />
+                                <label class="form-check-label" for="checkCollaborationRequests">
+                                    Collaboration Requests
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkFileExpirationAlerts" disabled />
+                                <label class="form-check-label" for="checkFileExpirationAlerts">
+                                    File Expiration Alerts
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkDeviceActivityAlerts" disabled />
+                                <label class="form-check-label" for="checkDeviceActivityAlerts">
+                                    Device Activity Alerts
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkSecurityAlerts" disabled />
+                                <label class="form-check-label" for="checkSecurityAlerts">
+                                    Security Alerts
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkSysUpdates" disabled />
+                                <label class="form-check-label" for="checkSysUpdates">
+                                    System Updates and Features
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkSubscription" disabled />
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Subscription Renewal Reminders
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <%} %>
+                    <div class="w-100">
+                        <div class="rounded-5 text-black w-50 p-2 text-center" style="background: #6DB5CA">Updates</div>
+                    </div>
                 </div>
             </div>
         </div>

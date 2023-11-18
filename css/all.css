@@ -11,3 +11,15 @@
 body {
 }
 
+input:-webkit-autofill {
+    background-color: #6DB5CA !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+input[data-autocompleted] {
+    background-color: #6DB5CA !important;
+}

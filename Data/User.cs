@@ -30,6 +30,11 @@ namespace Overshare.Data
             Account = new UserAccount(userID);
         }
 
+        public string GetUserProfileUrl()
+        {
+            return $"{HttpContext.Current.Server.MapPath("~")}//src//Users//{UserID}//profile.svg";
+        }
+
         public User()
         {
 
