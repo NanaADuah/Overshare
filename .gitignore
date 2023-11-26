@@ -366,3 +366,6 @@ FodyWeavers.xsd
 
 #ignore folders
 Users/
+/Web.config
+/Web.Debug.config
+/Web.Release.config
