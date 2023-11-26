@@ -28,18 +28,25 @@ namespace Overshare.drive
         protected string CurrentSelectedPage = "Home";
         protected string DisplayFilter  = "All";
         protected Guid CurrentFile;
-        protected int sortOrder = -1;
-        protected bool ascOrder = true;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (User.Identity.IsAuthenticated)
             {
+                if (!IsPostBack)
+                {
+                    ViewState["sortOrder"] = -1;
+                    ViewState["ascOrder"] = true;
+                }
+
                 string userEmail = User.Identity.Name;
                 user = UserController.GetUserByEmail(userEmail);
                 userAccount = new UserAccount(user.UserID);
 
-                files = SortFiles(GetUserFiles(DisplayFilter), sortOrder, ascOrder);
+                if (ViewState["sortOrder"] == null || String.IsNullOrEmpty(ViewState["sortOrder"].ToString()))
+                    ViewState["sortOrder"] = 0;
+
+                files = SortFiles(GetUserFiles(DisplayFilter), (int)ViewState["sortOrder"], (bool)ViewState["ascOrder"]);
                 percentageSizes = GetFileTypeDistribution(files);
                 ValidateUploadedFiles();
                 TotalStorage = GetStorageUsedWidth();
@@ -111,7 +118,7 @@ namespace Overshare.drive
             return output;
         }
 
-        public void DisplayPage(string CurrentSelectedPage)
+        public void DisplayPage(string CurrentSelectedPage, bool NotificationPreference = false)
         {
             if(CurrentSelectedPage == "Settings")
             {
@@ -122,7 +129,10 @@ namespace Overshare.drive
                 trash.Style["Display"] = "none";
                 home.Style["Display"] = "none";
 
-                settingsSideBar.Style["Display"] = "block";
+                if(NotificationPreference)
+                    sideBarSettingsRadio.Style["Display"] = "block";
+                else
+                    sideBarSettingsRadio.Style["Display"] = "none";
                 upload.Style["Display"] = "none";
             }
             else
@@ -168,9 +178,11 @@ namespace Overshare.drive
                 favourites.Style["Display"] = "none";
                 settings.Style["Display"] = "none";
                 viewFile.Style["Display"] = "none";
+                upload.Style["Display"] = "block";
                 shared.Style["Display"] = "none";
                 trash.Style["Display"] = "none";
                 home.Style["Display"] = "block";
+                sideBarSettingsRadio.Style["Display"] = "none";
             }
         }
         private void ValidateUploadedFiles()
@@ -639,26 +651,32 @@ namespace Overshare.drive
 
         protected void sortFileName_Click(object sender, EventArgs e)
         {
-            sortOrder = 0;
-            ascOrder = !ascOrder;
+            ViewState["sortOrder"] = 0;
+            ViewState["ascOrder"] = !(bool)ViewState["ascOrder"];
         }
 
         protected void sortFileSize_Click(object sender, EventArgs e)
         {
-            sortOrder = 3;
-            ascOrder = !ascOrder;
+            ViewState["sortOrder"] = 3;
+            ViewState["ascOrder"] = !(bool)ViewState["ascOrder"];
         }
 
         protected void sortFileUser_Click(object sender, EventArgs e)
         {
-            sortOrder = 2;
-            ascOrder = !ascOrder;
+            ViewState["sortOrder"] = 2;
+            ViewState["ascOrder"] = !(bool)ViewState["ascOrder"];
         }
 
         protected void sortFileDate_Click(object sender, EventArgs e)
         {
-            sortOrder = 1;
-            ascOrder = !ascOrder;
+            ViewState["sortOrder"] = 1;
+            ViewState["ascOrder"] = !(bool)ViewState["ascOrder"]; 
+        }
+
+        protected void btnEditPreferences_Click(object sender, EventArgs e)
+        {
+            CurrentSelectedPage = "Settings";
+            DisplayPage(CurrentSelectedPage, true);
         }
     }
 }

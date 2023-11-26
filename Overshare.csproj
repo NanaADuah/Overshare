@@ -164,6 +164,7 @@
     <Content Include="src\cloud.svg" />
     <Content Include="src\Email.svg" />
     <Content Include="src\Favourites.svg" />
+    <Content Include="src\document.svg" />
     <Content Include="src\file.svg" />
     <Content Include="src\video.svg" />
     <Content Include="src\folder.svg" />

@@ -84,6 +84,16 @@
             console.log(files);
         }
     </script>--%>
+    <script>
+        function showBar() {
+            var item = document.getElementById("sideBarSettingsRadio");
+
+            if (item.style.display == "none")
+                item.style.display = "block";
+            else
+                item.style.display = "none";
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server" class="h-100">
@@ -166,7 +176,7 @@
                             <div style="height: 10px; background-color: #b1b1b1; overflow:hidden;" class="rounded-5 w-100 text-center mx-auto d-flex">
                                 <%
                                     int totalWidth = GetStorageUsedWidth();%>
-                                <div class="d-flex" style="width: <%=totalWidth%>%; transition: flex 0.3s ease-out">
+                                <div class="d-flex rounded-5 overflow-hidden" style="width: <%=totalWidth%>%; transition: flex 0.3s ease-out">
                                     <div class="document-bar-fill" id="documentFill" style="width: <%=percentageSizes["Document"].ToString()%>%; background-color: #1dff22;"></div>
                                     <div class="video-bar-fill"    id="videoFill"    style="width: <%=percentageSizes["Video"].ToString()%>%;    background-color: #3498db;"></div>
                                     <div class="audio-bar-fill"    id="audioFill"    style="width: <%=percentageSizes["Audio"].ToString()%>%;    background-color: #e74c3c;"></div>
@@ -226,7 +236,7 @@
                         <table class="table table-borderless table-hover" style="max-height: 400px;height: 400px">
                             <thead class="fw-bold fs-5">
                                 <tr>
-                                    <th scope="col" onclick="sortFileName.click()">Files <i class="fa-solid fa-chevron-down"></i></th>
+                                    <th scope="col" onclick="sortFileName.click()">Files <i class="fa-solid  <%=(bool)ViewState["ascOrder"] /*&& ViewState["sortOrder"].ToString() == "Files"*/ ? "fa-chevron-down":"fa-chevron-up"  %>"></i></th>
                                     <th scope="col" onclick="sortFileDate.click()">Share date <i class="fa-solid fa-chevron-down"></i></th>
                                     <th scope="col" onclick="sortFileUser.click()">Share by <i class="fa-solid fa-chevron-down"></i></th>
                                     <th scope="col" onclick="sortFileSize.click()" class="text-end">Size <i class="fa-solid fa-chevron-down"></i></th>
@@ -316,11 +326,12 @@
 
                         <div>
                             <div>Account</div>
+                            <asp:Button runat="server" id="btnEditPreferences" class="d-none" OnClick="btnEditPreferences_Click"/>
                             <table class="w-50">
                                 <tbody>
                                     <tr>
                                         <td>Notification Preference</td>
-                                        <td class="text-decoration-underline">Edit</td>
+                                        <td class="text-decoration-underline"><span onclick="showBar()">Edit</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -377,8 +388,8 @@
                         <%} %>
                     </div>
                 </div>
-                <div id="settingsSideBar" runat="server" style="display: none" class="h-100">
-                    <div id="sideBarSettingsRadio" runat="server" class="justify-content-center align-items-center p-4 m-auto" style="line-height: 2em">
+                <div id="settingsSideBar" runat="server" style="" class="h-100; transition: display 3s ease-in" >
+                    <div id="sideBarSettingsRadio" runat="server" class="justify-content-center align-items-center p-4 m-auto d-none" style="line-height: 2em">
                         <span class="fw-bold">Notification Preferences</span>
                         <div>
                             <div class="form-check">
@@ -448,9 +459,9 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
                     <div class="w-100">
                         <div class="rounded-5 text-black w-50 p-2 text-center" style="background: #6DB5CA">Updates</div>
+                    </div>
                     </div>
                 </div>
             </div>
