@@ -165,9 +165,9 @@
     <Content Include="src\Email.svg" />
     <Content Include="src\Favourites.svg" />
     <Content Include="src\file.svg" />
-    <Content Include="src\film.svg" />
+    <Content Include="src\video.svg" />
     <Content Include="src\folder.svg" />
-    <Content Include="src\headphones.svg" />
+    <Content Include="src\audio.svg" />
     <Content Include="src\home.svg" />
     <Content Include="src\image.svg" />
     <Content Include="src\Lock.svg" />
@@ -176,7 +176,6 @@
     <Content Include="src\login\1.png" />
     <Content Include="src\login\3.png" />
     <Content Include="src\Logo.svg" />
-    <Content Include="src\Nonye.jpg" />
     <Content Include="src\plusImage.svg" />
     <Content Include="src\R.png" />
     <Content Include="src\search.svg" />
@@ -276,6 +275,8 @@
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="site.webmanifest" />
+    <None Include="Properties\PublishProfiles\phoenix321-001-site1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\phoenix321-001-site1 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

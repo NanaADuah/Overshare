@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="manifest" href="~/site.webmanifest" />
 
     <title>My Drive | OverShare </title>
     <style>
@@ -35,42 +35,7 @@
             color: #333;
         }
     </style>
-    <script type="text/javascript">
-        function callUploadMethod() {
-            alert("Uploading File");
-            PageMethods.UploadFile();
-        }
-
-        function onSuccess(result) {
-            alert(result); // Handle the result from C# function
-        }
-
-        function onError(error) {
-            alert(error.get_message()); // Handle the error
-        }
-
-    </script>
-    <script>
-        var fileTypePercentages = {
-            "image": 20,
-            "video": 30, // Example: 30%
-            "document": 10, // Example: 10%
-            "audio": 15, // Example: 15%
-            "other": 25 // Example: 25%
-        };
-
-        var documents = document.getElementById('documentFill');
-        var images = document.getElementById('imageFill');
-        var videos = document.getElementById('videoFill');
-        var audio = document.getElementById('audioFill');
-        var other = document.getElementById('documentFill');
-        var pSizes = percentageSizes;
-        //images.style.width = pSizes <>;
-
-
-
-    </script>
-    <script>
+    <%--<script>
         const dropArea = document.getElementById('dropArea');
 
         // Prevent default behaviors for drag-and-drop events
@@ -118,7 +83,7 @@
             // or perform other actions as needed
             console.log(files);
         }
-    </script>
+    </script>--%>
 </head>
 <body>
     <form id="form1" runat="server" class="h-100">
@@ -166,7 +131,7 @@
                     </ul>
                 </div>
             </div>
-            <div id="middle" class="column p-2 flex-fill px-4">
+            <div id="middle" class="column p-2 flex-fill px-4 " style="overflow:hidden">
                 <div runat="server" id="home">
                     <div id="overview" class="column flex-row d-flex align-items-center justify-content-center" style="gap: 15px;">
                         <div class="row d-flex flex-row m-0 px-1" style="flex-wrap: nowrap; gap: 15px;">
@@ -182,7 +147,7 @@
                         <div class="column flex-fill mx-auto">
                             <div class="rounded-5 border-0 p-2 mx-auto w-100" style="background-color: #B8D8E0;">
                                 <img src="../src/search.svg" style="margin-right: 10px" />
-                                <input class="border-0 input " placeholder="Search in OverShare" title="Search" id="search-input" />
+                                <input class="border-0 input" placeholder="Search in OverShare" type="search" title="Search" id="search-input" autocomplete="off"/>
                             </div>
                         </div>
                         <div class="m-2 rounded-5 px-4" style="background-color: #B8D8E0;">
@@ -195,15 +160,19 @@
 
                     </div>
                     <div id="storage" class="py-4">
-                        <h5>Storage (<%=String.Format($"{TotalStorage}% Used",TotalStorage)%>)
+                        <h5 class="<%=(TotalStorage >= 90)? "text-danger" : "text-black"%>">Storage (<%=$"{TotalStorage}% Used"%>)
                         </h5>
                         <div class="justify-content-center mx-4 py-2 percentage-bar-container">
-                            <div style="height: 10px; background-color: #b1b1b1" class="rounded-5 w-100 text-center mx-auto">
-                                <div class="document-bar-fill" id="documentFill" style="width: 100%;"></div>
-                                <div class="video-bar-fill" id="videoFill" style="width: 0%; background-color: #3498db;"></div>
-                                <div class="audio-bar-fill" id="audioFill" style="width: 0%; background-color: #e74c3c;"></div>
-                                <div class="image-bar-fill" id="imageFill" style="width: 0%; background-color: #f39c12;"></div>
-                                <div class="other-bar-fill" id="otherFill" style="width: 0%; background-color: #95a5a6;"></div>
+                            <div style="height: 10px; background-color: #b1b1b1; overflow:hidden;" class="rounded-5 w-100 text-center mx-auto d-flex">
+                                <%
+                                    int totalWidth = GetStorageUsedWidth();%>
+                                <div class="d-flex" style="width: <%=totalWidth%>%; transition: flex 0.3s ease-out">
+                                    <div class="document-bar-fill" id="documentFill" style="width: <%=percentageSizes["Document"].ToString()%>%; background-color: #1dff22;"></div>
+                                    <div class="video-bar-fill"    id="videoFill"    style="width: <%=percentageSizes["Video"].ToString()%>%;    background-color: #3498db;"></div>
+                                    <div class="audio-bar-fill"    id="audioFill"    style="width: <%=percentageSizes["Audio"].ToString()%>%;    background-color: #e74c3c;"></div>
+                                    <div class="image-bar-fill"    id="imageFill"    style="width: <%=percentageSizes["Image"].ToString()%>%;    background-color: #f39c12;"></div>
+                                    <div class="other-bar-fill"    id="otherFill"    style="width: <%=percentageSizes["Other"].ToString()%>%;    background-color: #95a5a6;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -224,22 +193,22 @@
                             Images
                         </div>
                         <div class="user-item column rounded-5 align-content-center p-2 py-4 flex-fill" onclick="btnViewVideos.click()" style="<%=(DisplayFilter == "Videos") ? "background-color: #8db4be": "background-color: #B8D8E0"%>">
-                            <img src="../src/file.svg" /><br />
+                            <img src="../src/video.svg" /><br />
                             Videos
                         </div>
                         <div class="user-item column rounded-5 align-content-center p-2 py-4 flex-fill" onclick="btnViewAudio.click()" style="<%=(DisplayFilter == "Audio") ? "background-color: #8db4be": "background-color: #B8D8E0"%>">
-                            <img src="../src/image.svg" /><br />
+                            <img src="../src/audio.svg" /><br />
                             Audio
                         </div>
                         <div class="user-item column rounded-5 align-content-center p-2 py-4 flex-fill" onclick="btnViewOthers.click()" style="<%=(DisplayFilter == "Others") ? "background-color: #8db4be": "background-color: #B8D8E0"%>">
-                            <img src="../src/image.svg" /><br />
+                            <img src="../src/file.svg" /><br />
                             Other
                         </div>
                     </div>
-                    <div id="files" class="px-4 justify-content-center">
+                    <div id="files" class="px-1 justify-content-center" >
                         <%if (fileCount == 0)
                             { %>
-                        <table class="table table-borderless table-hover table-">
+                        <table class="table table-borderless table-hover">
                             <thead>
                                 <tr>
                                     <th>Information</th>
@@ -254,16 +223,16 @@
                         <%}
                             else
                             {%>
-                        <table class="table table-borderless table-hover">
+                        <table class="table table-borderless table-hover" style="max-height: 400px;height: 400px">
                             <thead class="fw-bold fs-5">
                                 <tr>
-                                    <th scope="col">Files <i class="fa-solid fa-chevron-down"></i></th>
-                                    <th scope="col">Share date <i class="fa-solid fa-chevron-down"></i></th>
-                                    <th scope="col">Share by <i class="fa-solid fa-chevron-down"></i></th>
-                                    <th scope="col" class="text-end">Size <i class="fa-solid fa-chevron-down"></i></th>
+                                    <th scope="col" onclick="sortFileName.click()">Files <i class="fa-solid fa-chevron-down"></i></th>
+                                    <th scope="col" onclick="sortFileDate.click()">Share date <i class="fa-solid fa-chevron-down"></i></th>
+                                    <th scope="col" onclick="sortFileUser.click()">Share by <i class="fa-solid fa-chevron-down"></i></th>
+                                    <th scope="col" onclick="sortFileSize.click()" class="text-end">Size <i class="fa-solid fa-chevron-down"></i></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="overflow-y-scroll" >
                                 <%foreach (var item in files)
                                     { %>
                                 <tr style="vertical-align: middle;">
@@ -279,9 +248,17 @@
                         </table>
                         <%}
                         %>
+                        <div class="d-none">
+                            <asp:Button runat="server" id="sortFileName" OnClick="sortFileName_Click" />
+                            <asp:Button runat="server" id="sortFileDate" OnClick="sortFileDate_Click" />
+                            <asp:Button runat="server" id="sortFileUser" OnClick="sortFileUser_Click" />
+                            <asp:Button runat="server" id="sortFileSize" OnClick="sortFileSize_Click" />
+                        </div>
                     </div>
                 </div>
-                <div id="viewFile" runat="server" style="display: none">File</div>
+                <div id="viewFile" runat="server" style="display: none">
+
+                </div>
                 <div id="shared" runat="server" style="display: none">Shared</div>
                 <div id="favourites" runat="server" style="display: none">Favourites</div>
                 <div id="trash" runat="server" style="display: none">Trash</div>
@@ -401,7 +378,7 @@
                     </div>
                 </div>
                 <div id="settingsSideBar" runat="server" style="display: none" class="h-100">
-                    <div class="justify-content-center align-items-center p-4 m-auto" style="line-height: 2em">
+                    <div id="sideBarSettingsRadio" runat="server" class="justify-content-center align-items-center p-4 m-auto" style="line-height: 2em">
                         <span class="fw-bold">Notification Preferences</span>
                         <div>
                             <div class="form-check">

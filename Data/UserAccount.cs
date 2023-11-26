@@ -48,7 +48,7 @@ namespace Overshare.Data
                         {
                             PlanID = (int)reader["PlanID"];
                             AccountStatus = reader["AccountStatus"].ToString();
-                            SubscriptionStartDate = (DateTime)reader["RegistrationDate"];
+                            SubscriptionStartDate = (DateTime)reader["SubscriptionStartDate"];
                             SubscriptionEndDate = (DateTime)reader["SubscriptionEndDate"];
                             TotalStorageSpaceMB = (decimal)reader["TotalStorageSpaceMB"];
                             FilesUploaded = (int)reader["FilesUploaded"];
@@ -56,6 +56,11 @@ namespace Overshare.Data
                     }
                 }
             }
+        }
+
+        public long GetAccountPlanSize()
+        {
+            return 5 * (1024*1024);
         }
 
         public static void EnsureUserFolderAndFilesExist(Guid userID)

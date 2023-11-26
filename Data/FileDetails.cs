@@ -19,7 +19,7 @@ namespace Overshare.Data
 
         public FileDetails()
         {
-
+            
         }
 
         public static FileDetails GetSharedFileDetails(Guid fileID, Guid userID)

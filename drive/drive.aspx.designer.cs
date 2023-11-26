@@ -141,6 +141,42 @@ namespace Overshare.drive
         protected global::System.Web.UI.WebControls.Button btnViewOthers;
 
         /// <summary>
+        /// sortFileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button sortFileName;
+
+        /// <summary>
+        /// sortFileDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button sortFileDate;
+
+        /// <summary>
+        /// sortFileUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button sortFileUser;
+
+        /// <summary>
+        /// sortFileSize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button sortFileSize;
+
+        /// <summary>
         /// viewFile control.
         /// </summary>
         /// <remarks>
@@ -247,5 +283,14 @@ namespace Overshare.drive
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl settingsSideBar;
+
+        /// <summary>
+        /// sideBarSettingsRadio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl sideBarSettingsRadio;
     }
 }

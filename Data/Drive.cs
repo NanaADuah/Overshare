@@ -16,7 +16,14 @@ namespace Overshare.Data
     {
         public static string DisplayGreetingMessage()
         {
-            DateTime currentTime = DateTime.Now;
+            // Incoming date has DateTimeKind.Local 
+            var localDateTime = DateTime.Now;
+
+            // Set to unspecified
+            var unspecifiedDateTime = DateTime.SpecifyKind(localDateTime, DateTimeKind.Unspecified);
+
+            DateTime currentTime = TimeZoneInfo.ConvertTimeFromUtc(unspecifiedDateTime, TimeZoneInfo.FindSystemTimeZoneById("South Africa Standard Time"));
+            //
             int currentHour = currentTime.Hour;
 
             if (currentHour >= 5 && currentHour < 12)

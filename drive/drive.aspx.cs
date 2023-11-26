@@ -18,6 +18,7 @@ namespace Overshare.drive
     public partial class drive : System.Web.UI.Page
     {
         protected User user;
+        protected UserAccount userAccount;
         protected string TimeGreeting = Drive.DisplayGreetingMessage();
         protected List<FileDetails> files;
         protected int fileCount = 0;
@@ -25,20 +26,23 @@ namespace Overshare.drive
         protected Dictionary<string, int> percentageSizes;
         protected List<User> ShareList;
         protected string CurrentSelectedPage = "Home";
-        protected string DisplayFilter ;
+        protected string DisplayFilter  = "All";
         protected Guid CurrentFile;
+        protected int sortOrder = -1;
+        protected bool ascOrder = true;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (User.Identity.IsAuthenticated)
             {
                 string userEmail = User.Identity.Name;
-
                 user = UserController.GetUserByEmail(userEmail);
+                userAccount = new UserAccount(user.UserID);
 
+                files = SortFiles(GetUserFiles(DisplayFilter), sortOrder, ascOrder);
                 percentageSizes = GetFileTypeDistribution(files);
                 ValidateUploadedFiles();
-                files = GetUserFiles(DisplayFilter);
+                TotalStorage = GetStorageUsedWidth();
                 RemoveDuplicateFiles(files);
                 fileCount = files.Count;
                 ShareList = user.GetShareList();
@@ -47,6 +51,31 @@ namespace Overshare.drive
             else
             {
                 Response.Redirect("~/Login.aspx");
+            }
+        }
+
+        public static List<FileDetails> SortFiles(List<FileDetails> fileList, int columnIndex, bool ascending)
+        {
+            switch (columnIndex)
+            {
+                case 0:
+                    return ascending
+                        ? fileList.OrderBy(f => f.FileName).ToList()
+                        : fileList.OrderByDescending(f => f.FileName).ToList();
+                case 1:
+                    return ascending
+                        ? fileList.OrderBy(f => f.UploadDate).ToList()
+                        : fileList.OrderByDescending(f => f.UploadDate).ToList();
+                case 2:
+                    return ascending
+                        ? fileList.OrderBy(f => f.Owner.GetFullName()).ToList()
+                        : fileList.OrderByDescending(f => f.UploadDate).ToList();
+                case 3:
+                    return ascending
+                        ? fileList.OrderBy(f => f.FileSize).ToList()
+                        : fileList.OrderByDescending(f => f.FileSize).ToList();
+                default:
+                    return fileList;
             }
         }
 
@@ -59,7 +88,27 @@ namespace Overshare.drive
             {
                 throw new ArgumentException("Invalid characters in the full name.");
             }
+        }
 
+        public long GetUsedStorage()
+        {
+            long total = 0;
+            foreach (var item in files)
+            {
+                total += item.FileSize;
+            }
+
+            return total;
+        }
+
+        public int GetStorageUsedWidth()
+        {
+            var used = (double)GetUsedStorage();
+            var usedMB = (used / 1024f) / 1024f; //testing purpose
+            var size = (double)userAccount.GetAccountPlanSize();
+            var sizeUsed = (size / 1024f) / 1024f; //testing purpose
+            var output = (int)Math.Ceiling(used / size);
+            return output;
         }
 
         public void DisplayPage(string CurrentSelectedPage)
@@ -228,16 +277,14 @@ namespace Overshare.drive
                 Response.Redirect("~/Login.aspx");
             }
         }
-
-        [WebMethod]
-        public static Dictionary<string, int> GetFileTypeDistribution(List<FileDetails> files)
+        public Dictionary<string, int> GetFileTypeDistribution(List<FileDetails> files)
         {
             Dictionary<string, long> fileTypeSizes = new Dictionary<string, long>{
-                { "image", 0 },
-                { "video", 0 },
-                { "document", 0 },
-                { "audio", 0 },
-                { "other", 0 }
+                { "Image", 0 },
+                { "Video", 0 },
+                { "Document", 0 },
+                { "Audio", 0 },
+                { "Other", 0 }
             };
 
             long totalSize = 0;
@@ -302,21 +349,28 @@ namespace Overshare.drive
 
         private List<FileDetails> GetUserFiles(string DisplayFilter = "All")
         {
-            var uploadedFilesPath = Path.Combine(user.GetUserPath() + "/uploadedFiles.json");
+            var uploadedFilesPath = Path.Combine(user.GetUserPath(), "uploadedFiles.json");
 
-            List<FileDetails> uploadedFiles;
-
-            if (File.Exists(uploadedFilesPath))
+            if (!File.Exists(uploadedFilesPath))
             {
-                var json = File.ReadAllText(uploadedFilesPath);
-                uploadedFiles = JsonSerializer.Deserialize<List<FileDetails>>(json);
+                return new List<FileDetails>();
+            }
+
+            var json = File.ReadAllText(uploadedFilesPath);
+            var uploadedFiles = JsonSerializer.Deserialize<List<FileDetails>>(json);
+
+            if (DisplayFilter == "All")
+            {
+                // Return all files if the display filter is set to "All"
+                return uploadedFiles;
             }
             else
             {
-                uploadedFiles = new List<FileDetails>();
+                // Use LINQ to filter files based on the display filter (file extension)
+                return uploadedFiles
+                    .Where(file => GetFileType(file.FileName)?.ToLower() == DisplayFilter.ToLower())
+                    .ToList();
             }
-
-            return uploadedFiles;
         }
 
         private void UpdateUploadedFiles(string outputFile)
@@ -402,8 +456,9 @@ namespace Overshare.drive
             UploadUserFile();
         }
 
-        public static string GetFileType(string fileExtension)
+        public static string GetFileType(string file)
         {
+            string fileExtension = Path.GetExtension(file);
             string[] imageExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg" };
             string[] videoExtensions = { ".mp4", ".avi", ".mkv", ".mov", ".wmv" };
             string[] documentExtensions = { ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx" };
@@ -415,11 +470,11 @@ namespace Overshare.drive
             }
             else if (videoExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
             {
-                return "film";
+                return "Video";
             }
             else if (documentExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
             {
-                return "file";
+                return "Document";
             }
             else if (audioExtensions.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
             {
@@ -540,7 +595,10 @@ namespace Overshare.drive
         protected void btnViewAudio_Click(object sender, EventArgs e)
         {
             if (DisplayFilter == "Audio")
+            {
                 DisplayFilter = "All";
+                files = GetUserFiles();
+            }
             else
                 DisplayFilter = "Audio";
         }
@@ -560,20 +618,47 @@ namespace Overshare.drive
                 return fileName;
             }
 
-            int extensionIndex = fileName.LastIndexOf('.');
-            string extension = extensionIndex != -1 ? fileName.Substring(extensionIndex) : string.Empty;
+            string fileNameWithoutExtension = fileName;
+            //
 
-            string fileNameWithoutExtension = extensionIndex != -1
-                ? fileName.Substring(0, extensionIndex)
-                : fileName;
+            //int extensionIndex = fileName.LastIndexOf('.');
+            //string extension = extensionIndex != -1 ? fileName.Substring(extensionIndex) : string.Empty;
 
-            if (fileNameWithoutExtension.Length > maxLength)
+            //string fileNameWithoutExtension = extensionIndex != -1
+            //    ? fileName.Substring(0, extensionIndex)
+            //    : fileName;
+
+            if (fileName.Length > maxLength)
             {
                 fileNameWithoutExtension = fileNameWithoutExtension.Substring(0, maxLength - truncationIndicator.Length);
                 fileNameWithoutExtension += truncationIndicator;
             }
 
             return fileNameWithoutExtension;
+        }
+
+        protected void sortFileName_Click(object sender, EventArgs e)
+        {
+            sortOrder = 0;
+            ascOrder = !ascOrder;
+        }
+
+        protected void sortFileSize_Click(object sender, EventArgs e)
+        {
+            sortOrder = 3;
+            ascOrder = !ascOrder;
+        }
+
+        protected void sortFileUser_Click(object sender, EventArgs e)
+        {
+            sortOrder = 2;
+            ascOrder = !ascOrder;
+        }
+
+        protected void sortFileDate_Click(object sender, EventArgs e)
+        {
+            sortOrder = 1;
+            ascOrder = !ascOrder;
         }
     }
 }

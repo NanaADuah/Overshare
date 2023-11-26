@@ -23,3 +23,6 @@ input:-webkit-autofill:focus {
 input[data-autocompleted] {
     background-color: #6DB5CA !important;
 }
+
+@media screen and (max-width: 768px) {
+}
