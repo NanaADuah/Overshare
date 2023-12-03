@@ -1,0 +1,148 @@
+﻿html, body {
+    min-height: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    transition: 0.2s ease-in-out;
+}
+
+#wrapper {
+    flex-wrap: nowrap;
+    align-content: stretch;
+    transition: flex-grow 1000ms linear;
+}
+
+#settingsSideBar{
+    transition: display 0.2s ease-in-out;
+}
+
+#middle {
+    width: auto;
+    margin: 0;
+}
+
+#storage{
+    
+}
+
+#itemName:hover{
+    text-decoration: underline;
+}
+
+#options {
+    background-color: #B8D8E0;
+    resize: horizontal;
+    overflow: auto;
+    height: 100%;
+    width: 300px;
+}
+
+#rightView {
+    background-color: #B8D8E0;
+    height: 100%;
+    width: auto;
+    margin: 0px;
+    padding: 0px;
+}
+
+.options-list {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 2px;
+    font-size: large;
+    cursor: pointer;
+}
+
+.options-list:hover{
+    background-color: #a8cdd7;
+}
+
+#options-list{
+    padding: 0px;
+}
+
+#options-wrapper {
+    margin: auto !important;
+    align-content: center;
+}
+
+#options-bottom-wrapper{
+    margin: auto !important;
+    align-content: center;
+}
+
+.options-icon {
+    padding-left: 5px !important;
+}
+
+#bottom-items{
+    vertical-align: bottom;
+    bottom: 0 !important;
+}
+
+.user-image{
+    width: 50px;
+    border-radius: 50%;
+}
+
+#search-input{
+    width: 80%;
+    font-size: large;
+    background-color: #B8D8E0 !important;
+    outline: none !important;
+}
+
+::placeholder{
+    color: black;
+}
+
+.user-item{
+    align-content: center;
+    text-align: center;
+    background-color: #B8D8E0;
+    width: 8%;
+}
+
+.user-item:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#drive-items{
+    gap: 50px;
+}
+
+.share-user {
+    background-color: #6DB5CA;
+    padding: 7px;
+    margin: auto;
+}
+
+#overview{
+    vertical-align:middle;
+}
+
+.users-list{
+    padding: 0px !important;
+}
+
+.share-profile-img{
+    width: 40px !important;
+    border-radius: 50%;
+}
+
+#shareUser:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.changeInput {
+    background-color: #B8D8E0;
+    padding: 5px 15px 5px 15px;
+    width: 70%;
+    border: none !important;
+}
+
+.changeInput:active{
+    border: none !important;
+}

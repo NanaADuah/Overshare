@@ -1,0 +1,65 @@
+﻿html, body {
+    min-height: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+::placeholder {
+    color: black;
+    font-size: large;
+}
+
+.overview {
+    background-color: #B8D8E0;
+    height: 100vh;
+    width: 100% !important;
+    margin: 0;
+}
+
+#inputView {
+    margin: auto;
+}
+
+.input {
+    background-color: #6DB5CA !important;
+    outline: none;
+}
+
+#wrapper {
+    min-height: 100%;
+    height: 100%;
+    flex-wrap: nowrap;
+    display: flex !important;
+}
+
+#btnRegister {
+    outline: none;
+}
+
+.plan-card {
+    background-color: #6DB5CA;
+    height: 55vh;
+    padding: 20px;
+    flex: 1 1 0;
+    width: 0;
+    border-radius: 15px;
+}
+
+.planDetails {
+    line-height: 40px;
+}
+
+.card-top {
+    padding: 20px;
+    flex: 1 1 0;
+    width: 0;
+}
+
+.cardTab:hover {
+    background-color: white !important;
+    transition: 0.2s ease-in-out;
+    color: black !important;
+}
+

@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/src/Nonye.jpg
+
+
+#ignore folders
+Users/
+/Web.config
+/Web.Debug.config
+/Web.Release.config
